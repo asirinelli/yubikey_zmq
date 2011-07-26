@@ -1,6 +1,6 @@
 yubi-zeromq for Debian
 ----------------------
 
-<possible notes regarding this package - if none, delete this file>
+The sqlite3 database is created by the postinst script in /var/lib/yubikey-server
 
  -- Antoine Sirinelli <debian@monte-stello.com>  Mon, 25 Jul 2011 22:03:07 +0100
