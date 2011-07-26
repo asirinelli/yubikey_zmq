@@ -6,8 +6,8 @@
 #include "sql_yubi.h"
 #include "zhelpers.h"
 
-#define DEFAULT_DB "yubikeys.db"
-#define DEFAULT_PID "/tmp/yubi_server.pid"
+#define DEFAULT_DB "/var/lib/yubikey-server/yubikeys.db"
+#define DEFAULT_PID "/var/run/yubikey-server.pid"
 
 #define TOKEN_OK "OK"
 #define BAD_TOKEN "FAIL"
