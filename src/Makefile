@@ -1,4 +1,4 @@
-DEBUG   = -g
+DEBUG   = 
 WARNS   = -Wall
 CC      = gcc
 CFLAGS  = $(DEBUG) $(WARNS) `pkg-config --cflags sqlite3 libzmq` -fPIC

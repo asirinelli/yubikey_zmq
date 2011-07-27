@@ -29,7 +29,7 @@
 #define PAM_SM_PASSWORD
 #include <security/pam_modules.h>
 
-#define SERVER_LINK "tcp://localhost:5555"
+#define SERVER_LINK "tcp://localhost:555"
 
 #define D(x) do {							\
     printf ("debug: %s:%d (%s): ", __FILE__, __LINE__, __FUNCTION__);	\
