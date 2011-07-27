@@ -30,3 +30,4 @@ uninstall:
 	rm -f $(DESTDIR)$(sbindir)/yubi_zeromq_server
 	rm -f $(DESTDIR)$(bindir)/test_yubi_server
 	rm -f $(DESTDIR)$(pamlibdir)/pam_yubikey.so
+	rm -f $(DESTDIR)$(sbindir)/yubikey-add-key
