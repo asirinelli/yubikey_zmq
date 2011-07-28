@@ -37,7 +37,7 @@ $(PAM_MODULE): $(OBJ_PAM)
 
 %.o:    %.c
 	@echo CC $@
-	@$(CC) -c $(INC) $(CFLAGS) $< -o $@
+	@$(CC) -c $(CFLAGS) $<
 
 clean:
 	@echo "Cleaning src/"
