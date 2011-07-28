@@ -2,7 +2,7 @@ Source: yubi-zeromq
 Section: admin
 Priority: extra
 Maintainer: Antoine Sirinelli <debian@monte-stello.com>
-Build-Depends: debhelper (>= 8.0.0), libsqlite3-dev, libzmq-dev, libpam0g-dev
+Build-Depends: debhelper (>= 8.0.0), libsqlite3-dev, libzmq-dev, libpam0g-dev, pkg-config, libyubikey-dev
 Standards-Version: 3.9.2
 Homepage: https://www.monte-stello.com/gitweb/?p=yubi.git;a=summary
 #Vcs-Git: git://git.debian.org/collab-maint/yubi-zeromq.git
