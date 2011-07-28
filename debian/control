@@ -2,7 +2,7 @@ Source: yubi-zeromq
 Section: admin
 Priority: extra
 Maintainer: Antoine Sirinelli <debian@monte-stello.com>
-Build-Depends: debhelper (>= 8.0.0), libsqlite3-dev, libzmq-dev, libpam0g-dev
+Build-Depends: debhelper (>= 8.0.0), libsqlite3-dev, libzmq-dev, libpam0g-dev, libpgm-dev, apache2-threaded-dev
 Standards-Version: 3.9.2
 Homepage: https://www.monte-stello.com/gitweb/?p=yubi.git;a=summary
 #Vcs-Git: git://git.debian.org/collab-maint/yubi-zeromq.git
@@ -10,7 +10,7 @@ Vcs-Browser: https://www.monte-stello.com/gitweb/?p=yubi.git;a=summary
 
 Package: yubi-zeromq
 Architecture: any
-Depends: ${shlibs:Depends}, ${misc:Depends}, sqlite3, python
+Depends: ${shlibs:Depends}, ${misc:Depends}, sqlite3, python, apache2
 Description: Yubikey authentication server and PAM module
  This package provides an authentication server for Yubikeys relying on
  an sqlite3 database. Communication with the PAM module is achieved using
