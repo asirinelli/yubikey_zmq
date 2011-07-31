@@ -37,22 +37,82 @@
 **    The sample page from mod_authn_yubikey.c
 */ 
 
+#include <stdio.h>
 #include "httpd.h"
 #include "http_config.h"
 #include "http_protocol.h"
 #include "ap_config.h"
+#include "http_log.h"
 #include "mod_auth.h"
 #include "yubi_zeromq_client.h"
 
 #define SERVER_LINK "tcp://localhost:555"
+#define TOKEN_DIR "/tmp/yubi"
+#define GRACE_TIME (60*1)
 
 static authn_status authn_check_token(request_rec *r, const char *user,
 				      const char *token)
 {
   int retval;
+  char *ip, *token_file_p, *old_token, *old_ip;
+  char line[128];
+  FILE *token_file;
+  int ii, user_length;
+  struct stat sb;
+
+  user_length = strlen(user);
+  for (ii = 0; ii < user_length; ii++)
+    if ((user[ii] == '.' ) || (user[ii] == '/') || (user[ii] == '\\'))
+      {
+	ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r,
+		      "Invalid character in user '%s'", user);
+	return AUTH_DENIED;
+      }
+  token_file_p = malloc(sizeof(char) * (user_length + strlen(TOKEN_DIR) + 2));
+  sprintf(token_file_p, "%s/%s", TOKEN_DIR, user);
+  ip = r->connection->remote_ip;
+  if (!stat(token_file_p, &sb))
+    {
+      if ((time(NULL) - GRACE_TIME) > sb.st_mtime)
+	goto discard_old_token;
+      token_file = fopen(token_file_p, "r");
+      fgets(line, 128, token_file);
+      fclose(token_file);
+      old_token = strtok(line, " ");
+      if (old_token == NULL)
+	goto discard_old_token;
+      old_ip = strtok(NULL, " ");
+      if (old_ip == NULL)
+	goto  discard_old_token;
+      if (strcmp(token, old_token) != 0)
+	{
+	  ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, "token mismatch '%s / %s'", token, old_token);
+	  goto discard_old_token;
+	}
+      if (strcmp(ip, old_ip) != 0)
+	{
+	  ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, "IP mismatch '%s / %s'", ip, old_ip);
+	  goto discard_old_token;
+	}
+      /*
+       * If we are there, the token and IP should match and we should be in the
+       * grace time.
+       */
+      free(token_file_p);
+      return AUTH_GRANTED;
+    }
+ discard_old_token:
+  //ap_log_rerror(APLOG_MARK, APLOG_ERR, 0, r, "Connection from '%s'", ip);
   retval = ask_server(user, token, SERVER_LINK);
   if (retval == CHK_OK)
-    return AUTH_GRANTED;  
+    {
+      token_file = fopen(token_file_p, "w");
+      fprintf(token_file, "%s %s", token, ip);
+      fclose(token_file);
+      free(token_file_p);
+      return AUTH_GRANTED;
+    }
+  free(token_file_p);
   return AUTH_DENIED;
 }
 
