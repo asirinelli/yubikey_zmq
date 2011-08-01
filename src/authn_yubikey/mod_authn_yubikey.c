@@ -47,8 +47,8 @@
 #include "yubi_zeromq_client.h"
 
 #define SERVER_LINK "tcp://localhost:555"
-#define TOKEN_DIR "/tmp/yubi"
-#define GRACE_TIME (60*1)
+#define TOKEN_DIR "/var/lib/mod_authn_yubikey"
+#define GRACE_TIME (60*10)
 
 static authn_status authn_check_token(request_rec *r, const char *user,
 				      const char *token)

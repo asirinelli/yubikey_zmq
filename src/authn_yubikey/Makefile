@@ -17,12 +17,14 @@ APACHECTL=apachectl
 INCLUDES=-I..
 #LIBS=-Lmy/lib/dir -lmylib
 LIBS=`pkg-config --libs libzmq`
+AUTHDIR=$(DESTDIR)/var/lib/mod_authn_yubikey
 
 #   the default target
 all: local-shared-build
 
 #   install the shared object file into Apache 
 install: install-modules-yes
+	install -d -m700 -owww-data -gwww-data $(AUTHDIR)
 
 #   cleanup
 clean:
