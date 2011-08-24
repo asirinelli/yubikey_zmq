@@ -1,6 +1,7 @@
-yubi-zeromq (0.2-1) unstable; urgency=low
+yubi-zeromq (0.2) unstable; urgency=low
 
-  * New Upstream release
+  * New tool to manage keys in the database.
+  * New tool to generate random tokens.
 
  -- Antoine Sirinelli <antoine@monte-stello.com>  Thu, 28 Jul 2011 22:12:04 +0100
 
