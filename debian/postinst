@@ -29,6 +29,8 @@ do_create_db()
 case "$1" in
     configure)
 	[ -x $DB ] || do_create_db
+	chmod 700 /var/lib/mod_authn_yubikey
+	chown www-data:www-data /var/lib/mod_authn_yubikey
     ;;
 
     abort-upgrade|abort-remove|abort-deconfigure)
