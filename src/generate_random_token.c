@@ -71,11 +71,11 @@ int main(int argc, char **argv)
 
   key = yk_open_first_key();
   check_error();
-  printf("key: %p\n", key);
+  //printf("key: %p\n", key);
 
   status = ykds_alloc();
   check_error();
-  printf("status: %p\n", status);
+  //printf("status: %p\n", status);
 
   rc = yk_get_status(key, status);
   //printf("rc: %d\n", rc);
@@ -114,7 +114,7 @@ int main(int argc, char **argv)
   		       ykp_config_num(config_p),
   		       NULL);
   //printf("rc: %d\n", rc);
-  check_error();
+  //check_error();
 
   yk_release();
 
