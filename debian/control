@@ -1,12 +1,12 @@
 Source: yubi-zeromq
 Section: admin
 Priority: extra
-Maintainer: Antoine Sirinelli <debian@monte-stello.com>
+Maintainer: Antoine Sirinelli <antoine@monte-stello.com>
 Build-Depends: debhelper (>= 8.0.0), libsqlite3-dev, libzmq-dev, libpam0g-dev, pkg-config, libyubikey-dev, libpgm-dev, apache2-prefork-dev, libykpers-1-dev, libykpers-1-1
 Standards-Version: 3.9.2
-Homepage: https://www.monte-stello.com/gitweb/?p=yubi.git;a=summary
-Vcs-Git: git://www.monte-stello.com/yubi
-Vcs-Browser: https://www.monte-stello.com/gitweb/?p=yubi.git;a=summary
+Homepage: http://github.com/asirinelli/yubikey_zmq
+Vcs-Git: git://github.com/asirinelli/yubikey_zmq.git
+Vcs-Browser: https://github.com/asirinelli/yubikey_zmq
 
 Package: yubi-zeromq
 Architecture: any
