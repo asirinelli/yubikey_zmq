@@ -1,31 +1,38 @@
 #include <stdio.h>
 #include <string.h>
-#include "zhelpers.h"
 #include "yubi_zeromq_client.h"
+#include "yubi_zeromq_server.h"
+#include <zmq.h>
+
+#define BUFFER_LEN 255
 
 int ask_server(const char *user, const char *token, const char *server)
 {
   void *context, *requester;
-  char *request, *response;
-  int out;
+  char buffer[BUFFER_LEN];
+  int out, nbytes;
 
-  context = zmq_init(1);
+  context = zmq_ctx_new();
   requester = zmq_socket(context, ZMQ_REQ);
   zmq_connect(requester, server);
 
-  request = malloc((strlen(user) + strlen(token) + 2) * sizeof(char));
-  sprintf(request, "%s %s", user, token);
-  s_send(requester, request);
-  free(request);
+  snprintf(buffer, BUFFER_LEN, "%s %s", user, token);
+  buffer[BUFFER_LEN - 1] = 0;
+  nbytes = strnlen(buffer, BUFFER_LEN);
+  zmq_send(requester, buffer, nbytes, 0);
 
-  response = s_recv(requester);
+  nbytes = zmq_recv(requester, buffer, BUFFER_LEN, 0);
+  nbytes = (nbytes >= BUFFER_LEN) ? BUFFER_LEN-1 : nbytes;
+  buffer[nbytes] = 0;
+  /* printf("Debug(%d): %s\n", nbytes, buffer); */
+
   zmq_close(requester);
   zmq_term(context);
-  if (strcmp(response, TOKEN_OK) == 0)
+  if (strcmp(buffer, TOKEN_OK) == 0)
     out = CHK_OK;
-  else if (strcmp(response, BAD_TOKEN) == 0)
+  else if (strcmp(buffer, BAD_TOKEN) == 0)
     out = CHK_FAIL;
-  else if (strcmp(response, UNKNOWN_USER) == 0)
+  else if (strcmp(buffer, UNKNOWN_USER) == 0)
     out = CHK_UNKNOWN;
   else
     {
@@ -33,6 +40,5 @@ int ask_server(const char *user, const char *token, const char *server)
       out = CHK_FAIL;
     }
 
-  free(response);
   return out;
 }
