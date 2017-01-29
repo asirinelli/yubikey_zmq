@@ -5,12 +5,10 @@ DESTDIR =
 
 all:
 	@(cd src; $(MAKE) all)
-	@(cd src/authn_yubikey; $(MAKE) all)
 
 clean:
 	@echo "Cleaning..."
 	@(cd src; $(MAKE) clean)
-	@(cd src/authn_yubikey; $(MAKE) clean)
 	@rm -rf bin lib
 
 install: all
@@ -25,7 +23,6 @@ install: all
 	mkdir -p $(DESTDIR)/var/lib/yubikey-server
 	chmod 700 $(DESTDIR)/var/lib/yubikey-server
 #	install src/yubikey-add-key.py $(DESTDIR)$(sbindir)/yubikey-add-key
-	@(cd src/authn_yubikey; $(MAKE) install)
 
 uninstall:
 	rm -f $(DESTDIR)$(sbindir)/yubi_zeromq_server
