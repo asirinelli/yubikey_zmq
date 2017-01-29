@@ -2,7 +2,7 @@
  Yubikey zmq server
 ====================
 
-Copyright (C) 2011 Antoine Sirinelli <antoine@monte-stello.com>.
+Copyright (C) 2011-2017 Antoine Sirinelli <antoine@monte-stello.com>.
 
 Licensed under the GPL (Version 2 or greater).
 
@@ -35,12 +35,6 @@ This a module for the linux PAM. Any program using the PAM interface
 can then use one time password from the Yubikey. The recommended
 policy is to couple it with a traditional password.
 
-mod_authn_yubikey.so
---------------------
-
-This is a module for the Apache_ webserver. Yubikeys can then be used
-in classic web authentication.
-
 update_yubi_db
 --------------
 
@@ -71,7 +65,6 @@ following dependencies are needed (as Debian packages):
 - pkg-config
 - libyubikey-dev: Yubikey_ development files (used by the server to
   validate tokens)
-- apache2--dev: Apache_ development files (used by the Apache module)
 - libykpers-1-dev: `Yubikey personalization`_ development files (used
   by generate_random_token)
 
@@ -105,14 +98,6 @@ pam_yubikey.so
   hard-coded.
 * Implement a timeout in case the server does not respond.
 
-mod_authn_yubikey.so
---------------------
-
-* Pass options to the modules through Apache config files instead of
-  being hard-coded (server location, grace time, IP database
-  directory)
-* Implement a timeout in case the server does not respond.
-
 update_yubi_db
 --------------
 
@@ -130,6 +115,5 @@ generate_random_token
 .. _Yubikeys: http://yubico.com/yubikey
 .. _ZeroMQ: http://www.zeromq.org/
 .. _SQLite: http://www.sqlite.org/
-.. _Apache: http://httpd.apache.org/
 .. _Yubikey personalization: https://github.com/Yubico/yubikey-personalization
 .. _Nginx: http://wiki.nginx.org/
